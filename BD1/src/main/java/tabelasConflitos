@@ -1,0 +1,195 @@
+mysql> show tables;
++----------------------------+
+| Tables_in_ConflitosBelicos |
++----------------------------+
+| CEconomico                 |
+| CRacial                    |
+| CReligioso                 |
+| CTerritorial               |
+| ChefeMilitar               |
+| Conflitos                  |
+| Dialogo                    |
+| DivisaoArmada              |
+| FornecimentoArmas          |
+| GrupoArmado                |
+| LideresPoliticos           |
+| OrganizacaoMediadora       |
+| PaisAfetado                |
+| Participacao               |
+| TipoDeArma                 |
+| Traficante                 |
++----------------------------+
+16 rows in set (0,00 sec)
+
+mysql> show columns from CEconomico;
++---------------+------------+------+-----+---------+-------+
+| Field         | Type       | Null | Key | Default | Extra |
++---------------+------------+------+-----+---------+-------+
+| conflitoId    | int        | NO   | PRI | NULL    |       |
+| materia_prima | varchar(5) | NO   | PRI | NULL    |       |
++---------------+------------+------+-----+---------+-------+
+2 rows in set (0,00 sec)
+
+mysql> show columns from CRacial;
++------------+------------+------+-----+---------+-------+
+| Field      | Type       | Null | Key | Default | Extra |
++------------+------------+------+-----+---------+-------+
+| conflitoId | int        | NO   | PRI | NULL    |       |
+| etnia      | varchar(5) | NO   | PRI | NULL    |       |
++------------+------------+------+-----+---------+-------+
+2 rows in set (0,00 sec)
+
+mysql> show columns from CTerritorial;
++------------+------------+------+-----+---------+-------+
+| Field      | Type       | Null | Key | Default | Extra |
++------------+------------+------+-----+---------+-------+
+| conflitoId | int        | NO   | PRI | NULL    |       |
+| religião   | varchar(5) | NO   | PRI | NULL    |       |
++------------+------------+------+-----+---------+-------+
+2 rows in set (0,00 sec)
+
+mysql> show columns from CReligioso;
++------------+------------+------+-----+---------+-------+
+| Field      | Type       | Null | Key | Default | Extra |
++------------+------------+------+-----+---------+-------+
+| conflitoId | int        | NO   | PRI | NULL    |       |
+| religião   | varchar(5) | NO   | PRI | NULL    |       |
++------------+------------+------+-----+---------+-------+
+2 rows in set (0,01 sec)
+
+mysql> show columns from ChefeMilitar;
++-------------------+------------+------+-----+---------+-------+
+| Field             | Type       | Null | Key | Default | Extra |
++-------------------+------------+------+-----+---------+-------+
+| liderNome         | varchar(5) | NO   |     | NULL    |       |
+| codigo            | int        | NO   | PRI | NULL    |       |
+| faixa_hierarquica | varchar(5) | NO   |     | NULL    |       |
+| divisaoEnum       | int        | NO   |     | NULL    |       |
++-------------------+------------+------+-----+---------+-------+
+4 rows in set (0,00 sec)
+
+mysql> show columns from Conflitos;                 
++--------------------+------------+------+-----+---------+-------+
+| Field              | Type       | Null | Key | Default | Extra |
++--------------------+------------+------+-----+---------+-------+
+| id                 | int        | NO   | PRI | NULL    |       |
+| nome               | varchar(5) | NO   |     | NULL    |       |
+| num_mortos_feridos | int        | NO   |     | NULL    |       |
++--------------------+------------+------+-----+---------+-------+
+3 rows in set (0,00 sec)
+
+mysql> show columns from Dialogo;                   
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| liderNome      | varchar(5)  | NO   | PRI | NULL    |       |
+| organizacaoCod | int         | NO   | PRI | NULL    |       |
+| registro       | varchar(50) | NO   |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+3 rows in set (0,00 sec)
+
+mysql> show columns from DivisaoArmada;
++----------------+------+------+-----+---------+-------+
+| Field          | Type | Null | Key | Default | Extra |
++----------------+------+------+-----+---------+-------+
+| enum           | int  | NO   | PRI | NULL    |       |
+| num_homens     | int  | NO   |     | NULL    |       |
+| num_tanques    | int  | YES  |     | NULL    |       |
+| num_baixas     | int  | YES  |     | NULL    |       |
+| num_avioes     | int  | YES  |     | NULL    |       |
+| num_barcos     | int  | YES  |     | NULL    |       |
+| grupoArmadoCod | int  | NO   | PRI | NULL    |       |
+| chefeCod       | int  | NO   | MUL | NULL    |       |
++----------------+------+------+-----+---------+-------+
+8 rows in set (0,00 sec)
+
+mysql> show columns from FornecimentoArmas;         
++-------------------------+-------------+------+-----+---------+-------+
+| Field                   | Type        | Null | Key | Default | Extra |
++-------------------------+-------------+------+-----+---------+-------+
+| registro                | varchar(50) | NO   |     | NULL    |       |
+| tipo_de_registro        | varchar(5)  | NO   |     | NULL    |       |
+| quantidade_de_registros | int         | NO   |     | NULL    |       |
+| tipo_arma               | varchar(5)  | NO   |     | NULL    |       |
+| quantidade              | int         | NO   |     | NULL    |       |
+| nome_arma               | varchar(5)  | NO   | PRI | NULL    |       |
+| grupoArmadoCod          | int         | NO   | MUL | NULL    |       |
+| traficanteNome          | varchar(5)  | NO   | MUL | NULL    |       |
++-------------------------+-------------+------+-----+---------+-------+
+8 rows in set (0,00 sec)
+
+mysql> show columns from GrupoArmado;               
++--------------+------------+------+-----+---------+-------+
+| Field        | Type       | Null | Key | Default | Extra |
++--------------+------------+------+-----+---------+-------+
+| baixas       | int        | NO   |     | NULL    |       |
+| incorporacao | date       | NO   |     | NULL    |       |
+| codigo       | int        | NO   | PRI | NULL    |       |
+| nome         | varchar(5) | NO   |     | NULL    |       |
+| saida        | date       | NO   |     | NULL    |       |
++--------------+------------+------+-----+---------+-------+
+5 rows in set (0,01 sec)
+
+mysql> show columns from LideresPoliticos;          
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| nome           | varchar(5)  | NO   | PRI | NULL    |       |
+| grupoArmadoCod | int         | NO   | MUL | NULL    |       |
+| apoioTxt       | varchar(50) | NO   |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+3 rows in set (0,00 sec)
+
+mysql> show columns from OrganizacaoMediadora;      
++-------------------------+------------+------+-----+---------+-------+
+| Field                   | Type       | Null | Key | Default | Extra |
++-------------------------+------------+------+-----+---------+-------+
+| nome                    | varchar(5) | NO   |     | NULL    |       |
+| codigo                  | int        | NO   | PRI | NULL    |       |
+| incorporacao            | date       | NO   |     | NULL    |       |
+| num_pessoas_no_conflito | int        | NO   |     | NULL    |       |
+| tipo_ajuda              | varchar(5) | NO   |     | NULL    |       |
++-------------------------+------------+------+-----+---------+-------+
+5 rows in set (0,00 sec)
+
+mysql> show columns from PaisAfetado;               
++------------+---------+------+-----+---------+-------+
+| Field      | Type    | Null | Key | Default | Extra |
++------------+---------+------+-----+---------+-------+
+| conflitoId | int     | NO   | MUL | NULL    |       |
+| nome       | char(4) | NO   |     | NULL    |       |
++------------+---------+------+-----+---------+-------+
+2 rows in set (0,00 sec)
+
+mysql> show columns from Participacao;              
++------------------+------+------+-----+---------+-------+
+| Field            | Type | Null | Key | Default | Extra |
++------------------+------+------+-----+---------+-------+
+| grupoArmadoCod   | int  | NO   | PRI | NULL    |       |
+| conflitoId       | int  | NO   | PRI | NULL    |       |
+| organizacaoCod   | int  | NO   | PRI | NULL    |       |
+| organizacao_flag | int  | YES  |     | NULL    |       |
++------------------+------+------+-----+---------+-------+
+4 rows in set (0,01 sec)
+
+mysql> show columns from TipoDeArma;                
++------------------------+------------+------+-----+---------+-------+
+| Field                  | Type       | Null | Key | Default | Extra |
++------------------------+------------+------+-----+---------+-------+
+| nome_arma              | varchar(5) | NO   | PRI | NULL    |       |
+| quantidade             | int        | NO   |     | NULL    |       |
+| traficanteNome         | varchar(5) | NO   | MUL | NULL    |       |
+| tipo_registro          | varchar(5) | NO   |     | NULL    |       |
+| quantidade_de_registro | int        | NO   |     | NULL    |       |
++------------------------+------------+------+-----+---------+-------+
+5 rows in set (0,00 sec)
+
+mysql> show columns from Traficante;
++-------+------------+------+-----+---------+-------+
+| Field | Type       | Null | Key | Default | Extra |
++-------+------------+------+-----+---------+-------+
+| nome  | varchar(5) | NO   | PRI | NULL    |       |
++-------+------------+------+-----+---------+-------+
+1 row in set (0,00 sec)
+
+mysql>

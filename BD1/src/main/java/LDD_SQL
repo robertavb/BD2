@@ -1,0 +1,143 @@
+CREATE SCHEMA ConflitosBelicos
+
+CREATE TABLE ConflitosBelicos.Conflitos 
+( id				                INT			    NOT NULL,
+  nome  			              VARCHAR(5)	NOT NULL,
+  num_mortos_feridos        INT         NOT NULL,
+PRIMARY KEY (id));
+
+CREATE TABLE ConflitosBelicos.CReligioso
+( conflitoId                INT         NOT NULL,
+  religião                  VARCHAR(5)  NOT NULL,
+PRIMARY KEY(conflitoId,religião),
+FOREIGN KEY(conflitoId) REFERENCES Conflitos(id));
+
+CREATE TABLE ConflitosBelicos.CTerritorial
+( conflitoId                INT         NOT NULL,
+  religião                  VARCHAR(5)  NOT NULL,
+PRIMARY KEY(conflitoId,religião),
+FOREIGN KEY(conflitoId) REFERENCES Conflitos(id));
+
+CREATE TABLE ConflitosBelicos.CEconomico
+( conflitoId                INT         NOT NULL,
+  materia_prima             VARCHAR(5)  NOT NULL,
+PRIMARY KEY(conflitoId,materia_prima),
+FOREIGN KEY(conflitoId) REFERENCES Conflitos(id));
+
+CREATE TABLE ConflitosBelicos.CRacial
+( conflitoId                INT         NOT NULL,
+  etnia                     VARCHAR(5)  NOT NULL,
+PRIMARY KEY(conflitoId,etnia),
+FOREIGN KEY(conflitoId) REFERENCES Conflitos(id));
+
+CREATE TABLE ConflitosBelicos.PaisAfetado
+( conflitoId  			        INT			    NOT NULL,
+  nome			                CHAR(4)		  NOT NULL,
+PRIMARY KEY (conflitoId, nome),
+FOREIGN KEY (conflitoId) REFERENCES Conflitos(id));
+
+CREATE TABLE ConflitosBelicos.OrganizacaoMediadora
+( nome  			              VARCHAR(5)	NOT NULL,		
+  codigo 			              INT			    NOT NULL,
+  incorporacao              DATE		    NOT NULL,
+  num_pessoas_no_conflito   INT			    NOT NULL,
+  tipo_ajuda  			        VARCHAR(5)	NOT NULL,
+  tipo_organizacao		      VARCHAR(5),
+PRIMARY KEY (codigo));
+
+CREATE TABLE ConflitosBelicos.GrupoArmado
+( baixas                    INT         NOT NULL,
+  incorporacao              DATE        NOT NULL,
+  codigo                    INT         NOT NULL,
+  nome                      VARCHAR(5)  NOT NULL,
+  saida                     DATE        NOT NULL,
+PRIMARY KEY(codigo));
+
+CREATE TABLE ConflitosBelicos.Traficante
+( nome                      VARCHAR(5)  NOT NULL,
+PRIMARY KEY(nome));
+
+CREATE TABLE ConflitosBelicos.TipoDeArma
+( nome_arma                 VARCHAR(5)  NOT NULL,
+  quantidade                INT         NOT NULL,
+  traficanteNome            VARCHAR(5)  NOT NULL,
+  tipo_registro             VARCHAR(5)  NOT NULL,
+  quantidade_de_registro    INT         NOT NULL,
+PRIMARY KEY(nome_arma),
+FOREIGN KEY(traficanteNome) REFERENCES Traficante(nome));
+
+CREATE TABLE ConflitosBelicos.LideresPoliticos
+( nome                      VARCHAR(5)         NOT NULL,
+  grupoArmadoCod            INT         NOT NULL,
+  apoioTxt                  VARCHAR(50) NOT NULL,
+PRIMARY KEY(nome),
+FOREIGN KEY(grupoArmadoCod) REFERENCES GrupoArmado(codigo));
+
+CREATE TABLE ConflitosBelicos.DivisaoArmada
+( enum                      INT         NOT NULL,
+  num_homens                INT         NOT NULL,
+  num_tanques               INT,
+  num_baixas                INT,
+  num_avioes                INT,
+  num_barcos                INT,
+  grupoArmadoCod            INT         NOT NULL,
+  chefeCod                  INT         NOT NULL,
+PRIMARY KEY(enum, grupoArmadoCod, chefeCod),
+FOREIGN KEY(grupoArmadoCod) REFERENCES GrupoArmado(codigo),
+FOREIGN KEY(chefeCod) REFERENCES ChefeMilitar(codigo));
+
+CREATE TABLE ConflitosBelicos.DivisaoArmada
+( enum                      INT         NOT NULL,
+  num_homens                INT         NOT NULL,
+  num_tanques               INT,
+  num_baixas                INT,
+  num_avioes                INT,
+  num_barcos                INT,
+  grupoArmadoCod            INT         NOT NULL,
+PRIMARY KEY(enum, grupoArmadoCod),
+FOREIGN KEY(grupoArmadoCod) REFERENCES GrupoArmado(codigo));
+
+CREATE TABLE ConflitosBelicos.ChefeMilitar
+( liderNome                 VARCHAR(5)  NOT NULL,
+  codigo                    INT         NOT NULL,
+  faixa_hierarquica         VARCHAR(5)  NOT NULL,
+  divisaoEnum               INT         NOT NULL,
+PRIMARY KEY (codigo),
+FOREIGN KEY(liderNome) REFERENCES LideresPoliticos(nome),
+FOREIGN KEY(divisaoEnum) REFERENCES DivisaoArmada(enum));
+
+CREATE TABLE ConflitosBelicos.Dialogo
+( liderNome                 VARCHAR(5)  NOT NULL,
+  organizacaoCod            INT         NOT NULL,
+  registro                  VARCHAR(50) NOT NULL,
+PRIMARY KEY(liderNome, organizacaoCod),
+FOREIGN KEY(liderNome) REFERENCES LideresPoliticos(nome),
+FOREIGN KEY(organizacaoCod) REFERENCES OrganizacaoMediadora(codigo));
+
+CREATE TABLE ConflitosBelicos.Participacao
+( grupoArmadoCod            INT         NOT NULL,
+  conflitoId                INT         NOT NULL,
+  organizacaoCod            INT         NOT NULL,
+  organizacao_flag          INT,
+PRIMARY KEY(grupoArmadoCod, conflitoId, organizacaoCod),
+FOREIGN KEY(grupoArmadoCod) REFERENCES GrupoArmado(codigo),
+FOREIGN KEY(conflitoId) REFERENCES Conflitos(id),
+FOREIGN KEY(organizacaoCod) REFERENCES OrganizacaoMediadora(codigo));
+
+-- show tables;
+-- show columns from CEconomico;
+-- show columns from CRacial;
+-- show columns from CTerritorial;
+-- show columns from CReligioso;
+-- show columns from ChefeMilitar;
+-- show columns from Conflitos;                 
+-- show columns from Dialogo;                   
+-- show columns from DivisaoArmada;
+-- show columns from FornecimentoArmas;         
+-- show columns from GrupoArmado;               
+-- show columns from LideresPoliticos;          
+-- show columns from OrganizacaoMediadora;      
+-- show columns from PaisAfetado;               
+-- show columns from Participacao;              
+-- show columns from TipoDeArma;                
+-- show columns from Traficante;
